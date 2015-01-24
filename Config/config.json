@@ -1,0 +1,9 @@
+{
+    "MapHeaderPointers": "0x1ae",
+    "MapHeaderBanks": "0xc23d",
+    "Tilesets": "0xc7be",
+    "color0": "0xffffff",
+    "color1": "0x909090",
+    "color2": "0x404040",
+    "color3": "0x000000"
+}
