@@ -190,20 +190,43 @@ public class MapData {
      */
     public void resizeMap(int newWidth, int newHeight, int selectedBlock) {
         int oldSize = width*height;
-        width = newWidth;
-        height = newHeight;
-        int newSize = width*height;
+        int newSize = newWidth * newHeight;
+        int[] newTilemap;
         
-        // make new tilemap
-        int[] newTilemap = Arrays.copyOf(tileMap, newSize);
-        if (oldSize < newSize)
+        if (newWidth != width)
         {
-            // Fill the rest with an arbitrary tile number.
-            for (int i = oldSize; i < newSize; i++)
+            newTilemap = new int[newSize];
+            for (int i = 0; i < newHeight; i++)
             {
-                newTilemap[i] = selectedBlock;
+                for (int j = 0; j < newWidth; j++)
+                {
+                    if (j < width)
+                    {
+                        newTilemap[i * newWidth + j] = tileMap[i * width + j];
+                    } 
+                    else if (j >= width)
+                    {
+                        // Fill the last block of the row with the select block id.
+                        newTilemap[(i + 1) * newWidth - 1] = selectedBlock;
+                    }
+                }
             }
         }
+        else // height changed
+        {
+            newTilemap = Arrays.copyOf(tileMap, newSize);
+            if (oldSize < newSize)
+            {
+                // Fill the rest with the selected block id.
+                for (int i = oldSize; i < newSize; i++)
+                {
+                    newTilemap[i] = selectedBlock;
+                }
+            }
+        }
+        
+        width = newWidth;
+        height = newHeight;
         tileMap = newTilemap;
     }
     
